@@ -1,0 +1,117 @@
+body{ 
+    color: #333; 
+    background:transparent url("img/subtle_grunge.png") repeat 0 0;
+    font: normal 10px "Helvetica Neue", Helvetica, sans-serif; margin: 2em; 
+}
+
+h1, p{ 
+    font-weight: 300;  
+    margin: 0 0 0 0; 
+    padding: 0; 
+    text-align: center
+}
+
+p.hint{ 
+    margin-top: 0.25em; 
+}
+    
+h1{ 
+    font-size: 28px; 
+    font-weight: normal; 
+}
+    
+p{ 
+    font-size: 12px; 
+}
+    
+a{ 
+    color: #333;
+}
+
+.hidden{ 
+    display: none; 
+}
+
+.background {
+  fill: none;
+  pointer-events: all;
+}
+
+header{
+    margin-bottom: 20px
+}
+    
+div.tooltip  {
+    color: #222; 
+    background: #fff; 
+    padding: .5em; 
+    text-shadow: #f5f5f5 0 1px 0;
+    border-radius: 2px; 
+    box-shadow: 0px 0px 2px 0px #a6a6a6; 
+    opacity: 0.9; 
+    position: absolute;
+}
+
+div.tooltip .sep { 
+    color: #444; 
+    font-weight: 300;
+}
+
+path.country { 
+    fill: #ddd; 
+    //stroke: #FFF;
+    stroke-width: 0.5px; 
+}
+
+text.legend  { 
+    fill: #242930; 
+}
+
+.stroke {
+  fill: none;
+  stroke: #000;
+}
+
+.fill {
+  fill: #fff;
+}
+
+.background {
+  fill: none;
+  pointer-events: all;
+}
+
+.country {
+  fill: #ccc;
+}
+
+.country-boundary {
+  fill: none;
+  stroke: #fff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.country.selected {
+  fill: #DDD;
+}
+
+.country.selected-boundary, {
+  fill: none;
+  stroke: #fff;
+}
+
+.land {
+  fill: #222;
+}
+
+.boundary {
+  fill: none;
+  stroke: #fff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.country{
+  stroke-width: .5px;
+}

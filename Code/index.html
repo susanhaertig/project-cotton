@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+<script src="js/d3.min.js"></script>
+<script src="http://d3js.org/d3.geo.projection.v0.min.js"></script>
+<script src="http://d3js.org/queue.v1.min.js"></script>
+<script src="js/topojson.v1.min.js"></script>
+<script src="js/colorbrewer.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Cotton Production per capita (<span class="year">1961</span>)</h1>
+    <p>With data from <a href="http://www.fao.org">Faostat</a>.</p>
+    <p class="hint"><em>Use arrow keys to cycle through years or <a id="autoplay" href="#">autoplay</a>.</em></p>
+  </header>
+<script>
+var margin = {top: 50, right: 50, bottom: 50, left: 50},
+    width = 960 - margin.left - margin.right,
+    height = 580 - margin.bottom - margin.top,
+    active = d3.select(null);
+
+var commasFormatter = d3.format(",.0f")
+var commasFormatter = d3.format(",")
+
+var projection = d3.geo.mercator()
+    .scale(150)
+    .translate([width / 2, height / 2])
+    .precision(.1);
+
+var zoom = d3.behavior.zoom()
+    .translate([0, 0])
+    .scale(1)
+    .scaleExtent([1, 8])
+    .on("zoom", zoomed);
+
+var path = d3.geo.path()
+    .projection(projection);
+
+
+var ussr = {
+  "860": 1, "804": 1, "795": 1, "762": 1, "643": 1, "498": 1, "51": 1, "31": 1,
+  "112": 1, "233": 1, "268": 1, "398": 1, "417": 1, "428": 1, "440": 1
+};
+
+var yug = {
+  "705": 1, "191": 1, "807": 1, "499": 1, "688": 1, "70": 1, "-999":1
+};
+
+var eth= {
+  "232": 1, "231": 1
+};
+
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .on("click", stopped, true);
+
+svg.append("rect")
+    .attr("class", "background")
+    .attr("width", width)
+    .attr("height", height)
+    .on("click", reset);
+
+var g = svg.append("g");
+
+var tooltip = d3.select("body").append("div")
+                    .attr("class", "tooltip");
+
+var legend =  svg.append("g").attr("id", "legend");
+var circles =  svg.append("g").attr("id", "circles");
+
+svg
+    .call(zoom) // delete this line to disable free zooming
+    .call(zoom.event);
+
+queue()
+    .defer(d3.json, "data/world-50m.json")
+    .defer(d3.csv, "data/cotton_pc.csv", type)
+    .await(ready);
+
+function ready(error, world, cotton_pc) {
+  var nameById = {};
+  var latById = {};
+  var lonById = {};
+  var cotton_pcById = d3.nest()
+      .key(function(d) { return d.id; })
+      .map(cotton_pc, d3.map);
+
+  cotton_pc.forEach(function(d) {
+    nameById[d.id] = d.name;
+    latById[d.id] = parseFloat(d.lat);
+    lonById[d.id] = parseFloat(d.lon);
+  });
+
+  // Extract years and compute min/max years
+  var years    = d3.keys(cotton_pc[0])
+               .filter(function(d) { return d.match(/^\d/); })
+               .map(   function(d) { return parseInt(d); }),
+      min_year = d3.min(years),
+      max_year = d3.max(years),
+
+  // Starting year
+      year     = top.location.search.replace(/\?/, "") || min_year;
+
+  // Extract min/max values from the whole dataset
+  var values   = d3.merge(
+               cotton_pc
+                 .map(function(d) { return d3.entries(d).filter(function(d) { return d.key.match(/^\d/); }); })
+                 .map(function(d) { return d.map(function(d) { 
+                  return d.value; }); })
+                 .map(function(d) { return d.map(function(d) { 
+                  return parseFloat(d); }) })
+                 .map(function(d) { return d.filter(function(d) { return !isNaN(d); }) })
+             );
+    // Extract data for selected year
+  // (Returns a hash in the form of { <COUNTRY ID> : <VALUE> } for selected year)
+  var data = function() {
+               return cotton_pc
+                 .reduce( function(previous, current, index) {
+                   previous[ current["id"] ] = parseFloat(current[year]);
+                   return previous;
+                 }, {})
+              };
+
+  //Legends
+  console.log(d3.max(values))
+
+  //scales
+  var scale = colorbrewer.Oranges[9];
+  var scaleExport = colorbrewer.Oranges[9];
+
+  //domain for total production
+  var color_domain = [10, 100, 1000, 10000, 100000,1000000,10000000]
+  var ext_color_domain = [0, 10, 100, 1000, 10000, 100000,1000000,10000000]
+  var legend_labels_total = ["< 10", "10+", "100+", "1,000+", "10,000+","100,000+", "1,000,000+","> 10,000,000"]
+
+  var outColor = d3.scale.threshold()
+  .domain(color_domain)
+  .range(scale);
+
+  // //domain for production per capita
+  // var color_domain_pc = [5, 10, 15, 100, 200,300,400]
+  // var ext_color_domain_pc = [0, 5, 10, 15, 100, 200,300,400]
+  // var legend_labels_total_pc = ["< 5", "5+", "10+", "15+", "100+","200+", "300+","> 400"]
+
+  //domain for production per capita
+  var color_domain_pc = [10, 20, 30, 40, 50,60,70,80]
+  var ext_color_domain_pc = [0, 10, 20, 30, 40, 50,60,70,80]
+  var legend_labels_total_pc = ["0-10", "10-20", "20-30", "30-40", "40-50","50-60","60-70","70-80", "> 80"]
+
+  var outColor_pc = d3.scale.threshold()
+  .domain(color_domain_pc)
+
+  
+  .range(["#F3D9DE","#E7AEBD","#D8859B","#C95979","#B8365A","#9A2148","#79173A","#59102D","#41021F"]);
+
+
+
+  //radius for symbol map
+  var radius = d3.scale.sqrt()
+    .domain([d3.min(values), d3.max(values)])
+    .range([0, 40]);
+
+  //display all countries
+  var countries = topojson.feature(world, world.objects.countries),
+      countries_ussr = {type: "FeatureCollection", features: countries.features.filter(function(d) { return d.id in ussr; })}
+      countries_yug = {type: "FeatureCollection", features: countries.features.filter(function(d) { return d.id in yug; })};
+      countries_eth = {type: "FeatureCollection", features: countries.features.filter(function(d) { return d.id in eth; })};
+
+  var country = g.selectAll("path")
+      .data(topojson.feature(world, world.objects.countries).features)
+      .enter().append("path")
+      .attr("d", path)
+      .attr("class", "country")
+      .attr("id",function(d) { return d.id; })
+      .attr("title", function(d,i) { return d.properties.name; })
+      .on("click", clicked);
+
+  g.append("path")
+      .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
+      .attr("class", "country-boundary")
+      .attr("d", path);
+
+  // display USSR
+  var countryUssrB = g.append("path")
+      .datum(countries_ussr)
+      .attr("class", "country selected-boundary")
+      .attr("d", path);
+
+  var countryUssr = g.append("path")
+      .datum(countries_ussr)
+      .attr("class", "country selected")
+      .attr("d", path)
+      .on("click", clicked);
+
+  // display Yugoslavia
+  var countryYuB =  g.append("path")
+      .datum(countries_yug)
+      .attr("class", "country selected-boundary")
+      .attr("d", path);
+
+  var countryYu = g.append("path")
+      .datum(countries_yug)
+      .attr("class", "country selected")
+      .attr("d", path)
+      .on("click", clicked);
+
+  // display Ethiopia PDR
+  var countryEthB =  g.append("path")
+      .datum(countries_eth)
+      .attr("class", "country selected-boundary")
+      .attr("d", path);
+
+  var countryEth = g.append("path")
+      .datum(countries_eth)
+      .attr("class", "country selected")
+      .attr("d", path)
+      .on("click", clicked);
+
+  /*//circles
+  circles.selectAll("circle")
+        .data(cotton_pc)
+        .enter()
+        .append("circle")
+        .attr("cx", function(d) {
+          if(projection([d.lon,d.lat])){
+            return projection([d.lon,d.lat])[0];
+          }
+        })
+        .attr("cy", function(d) {
+          if(projection([d.lon,d.lat])){
+            return projection([d.lon,d.lat])[1];
+          }
+        })
+       .attr("r", function(d) {
+        if(projection([d.lon,d.lat]) != null){
+          return data()[d.id] ? radius(data()[d.id]) : null; 
+        
+        }
+       })
+       .style("fill", "yellow")
+       .style("opacity", 0.65)*/
+
+
+  // legend
+  var legendGroup = legend.selectAll(".lentry")
+    .data(ext_color_domain_pc)
+    .enter()
+    .append("g")
+    .attr("class","leg")
+    //.attr("transform", "translate(0," + (height-150) + ")");
+  
+      legendGroup.append("rect")
+        .attr("y", function(d,i) { return((height-20)-i*20)})
+        .attr("width","20px")
+        .attr("height","20px")
+        .style("fill", function(d, i) { return outColor_pc(d); })
+        .attr("stroke","#7f7f7f")
+        .attr("stroke-width","0.5");
+
+      legendGroup.append("text")
+        .attr("class", "legText")
+        .attr("x", 25)
+        .attr("y", function(d, i) { return ((height-20)-20 * i) + 14; })
+        .text(function(d, i){ return legend_labels_total_pc[i] + " tons"; })
+
+  // Update the chart graphics based on new data for selected year
+  var update = function() {
+
+    // Continue cycle when hitting dataset boundaries
+    if ( year < min_year ) year = max_year;
+    if ( year > max_year ) year = min_year;
+
+    //USSR & Yugoslavia display based on year
+    if(year >= "1992"){
+      countryYu.style("display","none");
+      countryYuB.style("display","none");
+      countryUssrB.style("display","none");
+      countryUssr.style("display","none");
+    }else{
+      countryYu.style("display","block");
+      countryYuB.style("display","block");
+      countryUssrB.style("display","block");
+      countryUssr.style("display","block");
+    }
+
+    if(year >= "1993"){
+      countryEthB.style("display","none");
+      countryEth.style("display","none");
+    }else{
+      countryEthB.style("display","block");
+      countryEth.style("display","block");
+    }
+
+    
+    // ** Update the year in the header
+    d3.select("h1 .year").text(year);
+
+    // * Countries
+    // ** Add colorization based on the color scale (animated)
+    country
+      .transition().duration(250)
+      .style("fill",  function(d) { return data()[d.id] ? outColor_pc(data()[d.id]) : null; });
+    
+    countryUssr
+      .transition().duration(250)
+      .style("fill",  function(d) { return data()[810] ? outColor_pc(data()[810]) : null; });
+
+    countryYu
+      .transition().duration(250)
+      .style("fill",  function(d) { return data()[891] ? outColor_pc(data()[891]) : null; });
+
+    countryEth
+      .transition().duration(220)
+      .style("fill",  function(d) { return data()[230] ? outColor_pc(data()[230]) : null; });
+
+    //circles
+  circles.selectAll("circle")
+        .transition().duration(250)
+        .attr("cx", function(d) {
+            return projection([d.lon,d.lat])[0];
+        })
+        .attr("cy", function(d) {
+            return projection([d.lon,d.lat])[1];
+        })
+       .attr("r", function(d) {
+          return data()[d.id] ? radius(data()[d.id]) : null; 
+        
+        
+       })
+       .style("fill", "yellow")
+       .style("opacity", 0.65)
+
+    // ** Show/hide tooltip
+    country
+      .on("mousemove", function(d,i) {
+        if(!(isNaN(d3.round(data()[d.id], 1)))){
+        var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
+            tooltip
+            .classed("hidden", false)
+            .attr("style", "left:"+(mouse[0]+25)+"px;top:"+(mouse[1]+85)+"px")
+
+            .html(nameById[d.id]+' <span class="sep">|</span> '+commasFormatter(data()[d.id], 1) + " tons")
+          }
+      })
+
+      .on("mouseout",  function(d,i) {
+          tooltip.classed("hidden", true)
+      });
+
+      countryYu
+      .on("mousemove", function(d,i) {
+        if(!(isNaN(d3.round(data()[891], 1)))){
+        var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
+            tooltip
+            .classed("hidden", false)
+            .attr("style", "left:"+(mouse[0]+25)+"px;top:"+(mouse[1]+85)+"px")
+
+            .html(nameById[891]+' <span class="sep">|</span> '+commasFormatter(data()[891], 1) + " tons")
+          }
+      })
+
+      .on("mouseout",  function(d,i) {
+          tooltip.classed("hidden", true)
+      });
+
+      countryUssr
+      .on("mousemove", function(d,i) {
+        if(!(isNaN(d3.round(data()[810], 1)))){
+        var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
+            tooltip
+            .classed("hidden", false)
+            .attr("style", "left:"+(mouse[0]+25)+"px;top:"+(mouse[1]+85)+"px")
+
+            .html(nameById[810]+' <span class="sep">|</span> '+commasFormatter(data()[810], 1) + " tons")
+          }
+      })
+
+      .on("mouseout",  function(d,i) {
+          tooltip.classed("hidden", true)
+      });
+
+      countryEth
+      .on("mousemove", function(d,i) {
+        if(!(isNaN(d3.round(data()[230], 1)))){
+        var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
+            tooltip
+            .classed("hidden", false)
+            .attr("style", "left:"+(mouse[0]+25)+"px;top:"+(mouse[1]+85)+"px")
+
+            .html(nameById[230]+' <span class="sep">|</span> '+commasFormatter(data()[230], 1) + " tons")
+          }
+      })
+
+      .on("mouseout",  function(d,i) {
+          tooltip.classed("hidden", true)
+      });
+
+    return svg;
+
+  };
+
+  // Update the chart on first load
+  update();
+
+  // Interactivity: cycle through years by arrow keys
+  d3.select(window).on("keydown", function() {
+    switch (d3.event.keyCode) {
+      case 37: year = parseInt(year)-1; update(); break;
+      case 39: year = parseInt(year)+1; update(); break;
+    }
+  });
+
+  // Hook up autoplay
+  var playing = false,
+      loop    = null;
+  d3.select("#autoplay").on("click", function() {
+    d3.event.preventDefault();
+    if (playing) {
+      playing = false;
+      clearInterval(loop);
+      return d3.select(d3.event.target).text("autoplay");
+    } else {
+      playing = true;
+      loop    = setInterval( function() { year += 1; update(); }, 750 );
+      return d3.select(d3.event.target).text("stop autoplay");
+    }
+  });
+
+  return svg;
+};
+
+function clicked(d) {
+  if (active.node() === this) return reset();
+  active.classed("active", false);
+  active = d3.select(this).classed("active", true);
+
+  var bounds = path.bounds(d),
+      dx = bounds[1][0] - bounds[0][0],
+      dy = bounds[1][1] - bounds[0][1],
+      x = (bounds[0][0] + bounds[1][0]) / 2,
+      y = (bounds[0][1] + bounds[1][1]) / 2,
+      scale = .9 / Math.max(dx / width, dy / height),
+      translate = [width / 2 - scale * x, height / 2 - scale * y];
+
+  svg.transition()
+      .duration(750)
+      .call(zoom.translate(translate).scale(scale).event);
+}
+
+function reset() {
+  active.classed("active", false);
+  active = d3.select(null);
+
+  svg.transition()
+      .duration(750)
+      .call(zoom.translate([0, 0]).scale(1).event);
+}
+
+function zoomed() {
+  g.style("stroke-width", .5 / d3.event.scale + "px");
+  g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+}
+
+// If the drag behavior prevents the default click,
+// also stop propagation so we don’t click-to-zoom.
+function stopped() {
+  if (d3.event.defaultPrevented) d3.event.stopPropagation();
+}
+
+function type(d) {
+  d.id = +d.id;
+  return d;
+}
+
+d3.select(self.frameElement).style("height", height + "px");
+
+</script>
