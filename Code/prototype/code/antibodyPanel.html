@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Antibody Panel Selector</title>
+    <meta charset="utf-8"> 
+    <script src='./libs/d3.min.js'></script>
+    <style>
+    #spectralViewer {
+ 
+    }
+    
+    path {
+        stroke-width:1;
+        stroke: steelblue;
+    }
+    
+    .filter{
+        fill: #EEE;
+        opacity: 0.7;
+    }
+    
+    .node {
+      cursor: pointer;
+    }
+
+    .node circle {
+      fill: #fff;
+      stroke: steelblue;
+      stroke-width: 1.5px;
+    }
+
+    .node text {
+      font: 10px sans-serif;
+    }
+
+    .link {
+      fill: none;
+      stroke: #ccc;
+      stroke-width: 1.5px;
+    }
+
+    
+    </style>
+</head>
+<body>
+<div id='overview'></div>
+<div id='spectralViewerInfo'></div>
+<div id='spectralViewer'> </div>
+</div>
+<script src='./js/overview.js'></script>
+<script src='./js/antibodyPanel2.js'></script>
+</body>
+</html>
