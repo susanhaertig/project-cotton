@@ -118,10 +118,10 @@ svg
 queue()
     .defer(d3.json, "data/world-50m.json")
     .defer(d3.csv, "data/all.csv", type)
-    .defer(d3.csv, "data/sp500.csv", type2)
+    .defer(d3.csv, "data/totalByYear.csv", type2)
     .await(ready);
 
-function ready(error, world, all,sp500) {
+function ready(error, world, all,totalByYear) {
 
       var nameById = {};
       all.forEach(function(d) {
@@ -129,8 +129,8 @@ function ready(error, world, all,sp500) {
       });
 
       // domains for context chart
-      x.domain(d3.extent(sp500.map(function(d) { return d.date; })));
-      y.domain([0, d3.max(sp500.map(function(d) { return d.total; }))]);
+      x.domain(d3.extent(totalByYear.map(function(d) { return d.date; })));
+      y.domain([0, d3.max(totalByYear.map(function(d) { return d.total; }))]);
 
       // Extract years and compute min/max years
       var years = d3.keys(all[0])
@@ -380,7 +380,7 @@ function ready(error, world, all,sp500) {
           .text("tons");
 
         context.append("path")
-            .datum(sp500)
+            .datum(totalByYear)
             .attr("class", "area")
             .attr("d", area);
 

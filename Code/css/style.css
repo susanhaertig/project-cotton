@@ -1,7 +1,7 @@
 body{ 
     color: #333; 
     margin:0 50px;
-    background:transparent url("img/subtle_grunge.png") repeat 0 0;
+    background:transparent url("../img/subtle_grunge.png") repeat 0 0;
     font-family: 'Open Sans', sans-serif;
     font-size:10px; 
 }
@@ -53,6 +53,9 @@ a{
 
 .shit{
   visibility: hidden;
+}
+table{
+  clear:both;
 }
 
 .pie{
@@ -183,28 +186,28 @@ h2{
 }
 
 .red{
-  background:transparent url("img/cotton.svg") no-repeat left center;
+  background:transparent url("../img/cotton.svg") no-repeat left center;
   padding-left:40px;
   min-height:35px;
   margin-bottom:15px;
 }
 
 .blue{
-  background:transparent url("img/drop_blue.svg") no-repeat left center;
+  background:transparent url("../img/drop_blue.svg") no-repeat left center;
   padding-left:40px;
   min-height:35px;
   margin-bottom:15px;
 }
 
 .green{
-  background:transparent url("img/drop_green.svg") no-repeat left center;
+  background:transparent url("../img/drop_green.svg") no-repeat left center;
   padding-left:40px;
   min-height:35px;
   margin-bottom:15px;
 }
 
 .resources{
-  background:transparent url("img/glass.svg") no-repeat left center;
+  background:transparent url("../img/glass.svg") no-repeat left center;
   padding-left:40px;
   min-height:35px;
 }
@@ -234,7 +237,7 @@ h2{
 }
 
 .capitaicon{
-  background:transparent url("img/person.svg") no-repeat 0 0;
+  background:transparent url("../img/person.svg") no-repeat 0 0;
   display:inline-block;
   text-indent: -9999px;
   height: 15px;
@@ -398,7 +401,7 @@ pointer-events:  none
 
 .infobox h2{
   margin:10px 10px 10px 0;
-  background:transparent url("img/help2.svg") no-repeat right top;
+  background:transparent url("../img/help2.svg") no-repeat right top;
   padding-right:22px;
   cursor:pointer;
   display:inline-block;
@@ -411,26 +414,26 @@ pointer-events:  none
 .infobox:hover{ max-height:1000px;}
 
 .tip1,.tip2,.tip3,.tip4,.tip5{
-  background:transparent url("img/arrow_grey.svg") no-repeat 7px center;
+  background:transparent url("../img/arrow_grey.svg") no-repeat 7px center;
   padding-left:35px;
   margin-bottom:10px;
   //color:#9098A5;
 } 
 
 .tip2{
-  background:transparent url("img/switch_grey.svg") no-repeat left center;
+  background:transparent url("../img/switch_grey.svg") no-repeat left center;
 } 
 
 .tip3{
-  background:transparent url("img/drop_grey.svg") no-repeat 5px center;
+  background:transparent url("../img/drop_grey.svg") no-repeat 5px center;
 } 
 
 .tip4{
-  background:transparent url("img/play_grey.svg") no-repeat 5px center;
+  background:transparent url("../img/play_grey.svg") no-repeat 5px center;
 } 
 
 .tip5{
-  background:transparent url("img/zoom.svg") no-repeat 5px center;
+  background:transparent url("../img/zoom.svg") no-repeat 5px center;
 } 
 
 div#aboutcontainer, div#screencastcontainer,div#resourcescontainer,div#datacontainer{
@@ -439,7 +442,7 @@ div#aboutcontainer, div#screencastcontainer,div#resourcescontainer,div#dataconta
 
 div#aboutcontainer div, div#resourcescontainer div,div#datacontainer div, div#screencastcontainer div{
   margin:0 auto;
-  width:600px;
+  width:700px;
   position: relative;
   top: 25%;
 }

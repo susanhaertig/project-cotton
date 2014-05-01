@@ -5,11 +5,10 @@
 <script src="js/d3.geo.projection.v0.min.js"></script>
 <script src="js/queue.v1.min.js"></script>
 <script src="js/topojson.v1.min.js"></script>
-<script src="js/colorbrewer.js"></script>
 <script src="js/d3.slider.js"></script>
 <script src='js/smooth-scroll.js'></script>
-<link rel="stylesheet" href="js/d3.slider.css" />  
-<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" href="css/d3.slider.css" />  
+<link rel="stylesheet" type="text/css" href="css/style.css">
  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,700italic,400italic,300,300italic,600,600italic' rel='stylesheet' type='text/css'>
 </head>
 <body>
@@ -90,7 +89,7 @@
 Cotton production and processing are also a major source of pollution of fresh water. Globally, freshwater resources are becoming scarcer due to a growing population, increasing wealth and consumption and hence increasing water withdrawals for human use. The impact of consumption can be quantified with the concept of the “water footprint”, a concept introduced by Hoekstra and Hung (2002), and further elaborated by Chapagain and Hoekstra (2004). The water footprint of a nation has been defined as the total volume of freshwater that is used to produce the goods and services consumed by the inhabitants of the nation (Chapagain et al., 2006).
 </p>
 <p>
-This visualization shows the world wide cotton production in comparison to the consumptive water use. The water consumption can be divided into green water (water from rainwater stored in soil) and blue water (fresh water in lakes, rivers, aquifers). Blue water is stress-weighted because it is consumed at rates faster than its short-term replacement and many cotton producing countries have limited blue water resources. I want to compare this 2 types per country and show the result in relative (per capita) and absolute values.</p>
+This visualization shows the world wide cotton production in relation to the consumptive water use. The water consumption can be divided into green water (water from rainwater stored in soil) and blue water (fresh water in lakes, rivers, aquifers). Blue water is stress-weighted because it is consumed at rates faster than it's short-term replacement and many cotton producing countries have limited blue water resources. This visualization allows you to compare this two types per country and in relative (per capita) and absolute values and shows you how much percent of the total renewable water resources per capita are withdrawn for cotton production.</p>
 </div>
 </div>
 
@@ -127,35 +126,35 @@ This visualization shows the world wide cotton production in comparison to the c
 <p><strong>Code</strong></p>
 <ul>
 <li>
-The basic code for the choropleth map that let's you cycle through the years is borrowed from <a target="_blank" href="https://gist.github.com/karmi/2366285">https://gist.github.com/karmi/2366285</a> by Karel Minarik.
+The basic code for the choropleth map that let's you cycle through the years comes from Karel Minarik, 2013, Life Expectancy Choropleth Map, accessed on [03/2014], <a target="_blank" href="https://gist.github.com/karmi/2366285">https://gist.github.com/karmi/2366285</a> 
 </li>
 
-<li>The zoom functionality comes from <a target="_blank" href="https://gist.github.com/mbostock/9656675">https://gist.github.com/mbostock/9656675</a> by Mike Bostock.
+<li>The zoom functionality comes from Mike Bostock, 2014, Zoom to Bounding Box II, accessed on [04/2014], <a target="_blank" href="https://gist.github.com/mbostock/9656675">https://gist.github.com/mbostock/9656675</a>.
 </li>
 
-<li>The code for merging states with topojson comes from <a target="_blank" href="https://gist.github.com/mbostock/5416440">https://gist.github.com/mbostock/5416440</a> by Mike Bostock.
+<li>The code for merging states with topojson comes from Mike Bostock, 2013, Merging States II, accessed on [03/2014], <a target="_blank" href="https://gist.github.com/mbostock/5416440">https://gist.github.com/mbostock/5416440</a>.
 </li>
-<li>The basic code for the slider comes from <a target="_blank" href="https://github.com/turban/d3.slider">https://github.com/turban/d3.slider</a> by Bjorn Sandvik and has been modified to integrate an area chart.
+<li>The basic code for the slider comes from Bjorn Sandvik, 2013, D3.js Slider, accessed on [04/2014], <a target="_blank" href="https://github.com/turban/d3.slider">https://github.com/turban/d3.slider</a> and has been modified to integrate an area chart.
 </li>
 
-<li>The code for the toggle/switch comes from <a target="_blank" href="http://webdesign.tutsplus.com/tutorials/creating-a-javascript-free-radio-toggle-in-css3--webdesign-7690">http://webdesign.tutsplus.com/tutorials/creating-a-javascript-free-radio-toggle-in-css3--webdesign-7690</a> by Sebastian Sandqvist.
+<li>The code for the toggle/switch comes from Sebastian Sandqvist, 2012, Creating a JavaScript-Free Radio Toggle in CSS3, accessed on [04/2014], <a target="_blank" href="http://webdesign.tutsplus.com/tutorials/creating-a-javascript-free-radio-toggle-in-css3--webdesign-7690">http://webdesign.tutsplus.com/tutorials/creating-a-javascript-free-radio-toggle-in-css3--webdesign-7690</a>.
 </li>
 </ul>
 <p><strong>Icons</strong></p>
 <ul>
-  <li>"People" designed by Wilson Joseph <a target="_blank" href="http://thenounproject.com/term/people/23892/">http://thenounproject.com/term/people/23892/</a></li>
+  <li>"People" designed by Wilson Joseph, 2013, <a target="_blank" href="http://thenounproject.com/term/people/23892/">http://thenounproject.com/term/people/23892/</a></li>
   
-  <li>"Cursor" designed by Brandon Keelean <a target="_blank" href="http://thenounproject.com/term/cursor/8362/">http://thenounproject.com/term/cursor/8362/</a></li>
+  <li>"Cursor" designed by Brandon Keelean, 2012, <a target="_blank" href="http://thenounproject.com/term/cursor/8362/">http://thenounproject.com/term/cursor/8362/</a></li>
   
-  <li>"Play" designed by P.J. Onori <a target="_blank" href="http://thenounproject.com/term/play/2873/">http://thenounproject.com/term/play/2873/</a></li>
+  <li>"Play" designed by P.J. Onori, 2009, <a target="_blank" href="http://thenounproject.com/term/play/2873/">http://thenounproject.com/term/play/2873/</a></li>
   
-  <li>"Zoom" designed by Alex S. Lakas <a target="_blank" href="http://thenounproject.com/term/zoom/15441/">http://thenounproject.com/term/zoom/15441/</a></li>
+  <li>"Zoom" designed by Alex S. Lakas, 2013, <a target="_blank" href="http://thenounproject.com/term/zoom/15441/">http://thenounproject.com/term/zoom/15441/</a></li>
   
-  <li>"Question" designed by Christopher Holm-Hansen <a target="_blank" href="http://thenounproject.com/term/question/39574/">http://thenounproject.com/term/question/39574/</a></li>
+  <li>"Question" designed by Christopher Holm-Hansen, 2014, <a target="_blank" href="http://thenounproject.com/term/question/39574/">http://thenounproject.com/term/question/39574/</a></li>
   
-  <li>"Water" designed by Monika Ciapala <a target="_blank" href="http://thenounproject.com/term/water/3275/">http://thenounproject.com/term/water/3275/</a></li>
+  <li>"Water" designed by Monika Ciapala, 2012, <a target="_blank" href="http://thenounproject.com/term/water/3275/">http://thenounproject.com/term/water/3275/</a></li>
   
-  <li>"Cotton" designed by Marwa Boukarim <a target="_blank" href="http://thenounproject.com/term/cotton/18663/">http://thenounproject.com/term/cotton/18663/</a></li>
+  <li>"Cotton" designed by Marwa Boukarim, 2013, <a target="_blank" href="http://thenounproject.com/term/cotton/18663/">http://thenounproject.com/term/cotton/18663/</a></li>
 </ul>
 <p>
 The git repository for the project is <a target="_blank" href="https://github.com/susanhaertig/project-cotton">https://github.com/susanhaertig/project-cotton</a>.
