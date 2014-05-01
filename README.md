@@ -1,10 +1,10 @@
-Cotton production and consumptive water use 1961-2012
+Water footprint of cotton production
 =====================================================
-CS171 Final Project - Visualization of Cotton production and consumptive water use 1961-2012 
+CS171 Final Project - Visualization about water footprint of cotton production 1961-2012 
 
 URL: http://cotton.susanhaertig.com/
 
-Screencast: https://vimeo.com/
+Screencast: https://vimeo.com/93529876
 
 Author: Susan Härtig
 
