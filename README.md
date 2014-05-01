@@ -4,7 +4,7 @@ CS171 Final Project - Visualization about water footprint of cotton production 1
 
 URL: http://cotton.susanhaertig.com/
 
-Screencast: https://vimeo.com/93529876
+Screencast: https://vimeo.com/93532215
 
 Author: Susan Härtig
 
