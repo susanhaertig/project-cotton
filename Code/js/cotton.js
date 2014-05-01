@@ -1,3 +1,22 @@
+/*  
+The basic code for the choropleth map that let's you cycle through the years
+comes from Karel Minarik, 2013, Life Expectancy Choropleth Map, accessed on
+[03/2014], https://gist.github.com/karmi/2366285
+
+The zoom functionality comes from Mike Bostock, 2014, Zoom to Bounding Box II,
+accessed on [04/2014], https://gist.github.com/mbostock/9656675.
+
+The code for merging states with topojson comes from Mike Bostock, 2013, Merging
+States II, accessed on [03/2014], https://gist.github.com/mbostock/5416440.
+
+The code for the area chart comes from Mike Bostock, 2014, Focus+Context via
+Brushing, accessed on [04/2014], https://gist.github.com/mbostock/1667367.
+
+The basic code for the slider comes from Bjorn Sandvik, 2013, D3.js Slider,
+accessed on [04/2014], https://github.com/turban/d3.slider and has been modified
+to integrate an area chart.
+*/
+
 var margin = {top: 50, right: 0, bottom: 50, left: 0},
     width = 900 - margin.left - margin.right,
     height = 540 - margin.bottom - margin.top,

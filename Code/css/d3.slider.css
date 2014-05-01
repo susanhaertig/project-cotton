@@ -1,3 +1,10 @@
+/*
+The code for the toggle/switch comes from Sebastian Sandqvist, 2012, Creating a
+JavaScript-Free Radio Toggle in CSS3, accessed on [04/2014],
+http://webdesign.tutsplus.com/tutorials/creating-a-javascript-free-radio-toggle-
+in-css3--webdesign-7690. 
+*/
+
 .d3-slider {
     position: relative;
     font-size: 9px;
