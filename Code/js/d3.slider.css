@@ -1,0 +1,90 @@
+.d3-slider {
+    position: relative;
+    font-size: 9px;
+    height:70px;
+    width:850px;
+    z-index: 2;
+    clear: both;
+    margin-left:50px;
+}
+
+.d3-slider-horizontal {
+    //height: 10px;
+}  
+
+.d3-slider-range {
+  background:#2980b9;
+  left:0px;
+  right:0px;
+  height: 0.8em;
+  position: absolute;
+}
+
+.d3-slider-range-vertical {
+  background:#2980b9;
+  left:0px;
+  right:0px;
+  position: absolute;
+  top:0;
+}
+
+.d3-slider-vertical {
+    width: .8em;
+    height: 100px;
+}      
+
+.d3-slider-handle {
+    position: absolute;
+    width: 1px;
+    border-right:1px dotted #333;
+    height: 50px;
+    background: transparent;
+    z-index: 3;
+}
+
+.d3-slider-handle:hover {
+    border-right:1px dotted #ff0000;
+    cursor:col-resize;
+}
+
+.d3-slider-horizontal .d3-slider-handle {
+    top: -.3em;
+    margin-left: -1px;
+}
+
+.d3-slider-axis {
+    position: relative;
+    pointer-events:  none;
+    z-index: 1;    
+}
+
+.d3-slider-axis-bottom {
+    top: 0;
+}
+
+.d3-slider-axis-right {
+    left: .8em;
+}
+
+.d3-slider-axis path {
+    stroke-width: 0;
+    fill: none;
+}
+
+.d3-slider-axis line {
+  position:relative;
+  top:65px;
+    fill: none;
+    stroke: #aaa;
+    shape-rendering: crispEdges;
+}
+
+.d3-slider-axis text {
+    font-size: 9px;
+}
+
+.d3-slider-vertical .d3-slider-handle {
+    left: -.5em;
+    margin-left: 0;
+    margin-bottom: -.6em;      
+}
