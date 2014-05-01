@@ -42,6 +42,14 @@ form{
 p,ul{ 
     font-size: 13px; 
 }
+
+ul{
+  padding-left:18px;
+}
+
+li{
+  margin-bottom:5px;
+}
     
 a{ 
     color: #333;
@@ -438,11 +446,22 @@ pointer-events:  none
 
 div#aboutcontainer, div#screencastcontainer,div#resourcescontainer,div#datacontainer{
   height: 100vh;
+  display: table;
+  width:100%;
 }
 
-div#aboutcontainer div, div#resourcescontainer div,div#datacontainer div, div#screencastcontainer div{
-  margin:0 auto;
+.innerdiv{
+  display: table-cell;
+    vertical-align: middle;
+}
+
+.innerdiv h2,.innerdiv p, .innerdiv ul, .innerdiv div{
   width:700px;
-  position: relative;
-  top: 25%;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.innerdiv h2 {
+font-size: 26px;
+font-weight: 300;
 }
