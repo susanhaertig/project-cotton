@@ -1,4 +1,4 @@
-Water footprint of cotton production
+Cotton Production & water consumption
 =====================================================
 CS171 Final Project - Visualization about water footprint of cotton production 1961-2012 
 
