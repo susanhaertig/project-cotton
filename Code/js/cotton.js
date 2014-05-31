@@ -113,6 +113,14 @@ var eth= {
     "232": 1, "231": 1
 };
 
+var sudan= {
+    "729": 1, "728": 1
+};
+
+var somalia= {
+    "706": 1, "-99": 1
+};
+
 // define svg components
 var svg = d3.select("#vis").append("svg")
     .attr("width", width)
@@ -272,6 +280,8 @@ function ready(error, world, all,totalByYear) {
           countries_ussr = {type: "FeatureCollection", features: countries.features.filter(function(d) { return d.id in ussr; })}
           countries_yug = {type: "FeatureCollection", features: countries.features.filter(function(d) { return d.id in yug; })};
           countries_eth = {type: "FeatureCollection", features: countries.features.filter(function(d) { return d.id in eth; })};
+          countries_sudan = {type: "FeatureCollection", features: countries.features.filter(function(d) { return d.id in sudan; })};
+          countries_somalia = {type: "FeatureCollection", features: countries.features.filter(function(d) { return d.id in somalia; })};
 
       var country = g.selectAll("path")
           .data(topojson.feature(world, world.objects.countries).features)
@@ -319,6 +329,30 @@ function ready(error, world, all,totalByYear) {
 
       var countryEth = g.append("path")
           .datum(countries_eth)
+          .attr("class", "country selected")
+          .attr("d", path)
+          .on("click", clicked);
+
+          // display Sudan
+      var countrySudanB =  g.append("path")
+          .datum(countries_sudan)
+          .attr("class", "country selected-boundary")
+          .attr("d", path);
+
+      var countrySudan = g.append("path")
+          .datum(countries_sudan)
+          .attr("class", "country selected")
+          .attr("d", path)
+          .on("click", clicked);
+
+          // display Somalia
+      var countrySomaliaB =  g.append("path")
+          .datum(countries_somalia)
+          .attr("class", "country selected-boundary")
+          .attr("d", path);
+
+      var countrySomalia = g.append("path")
+          .datum(countries_somalia)
           .attr("class", "country selected")
           .attr("d", path)
           .on("click", clicked);
@@ -650,6 +684,104 @@ function ready(error, world, all,totalByYear) {
                 tooltip.classed("hidden", true)
              });
 
+            countrySudan
+            .on("mousemove", function(d,i) {
+                if(!(isNaN(d3.round(data_cotton_pc()[729], 1)))){
+                    countrySudan
+                      hover.classed("hover", false)
+                      hover = d3.select(this).classed("hover", true)
+                      .style("cursor", "pointer")
+                      tooltip
+                        .classed("hidden", false)
+                        d3.select("h2.country").html(function() {
+                            return nameById[729];
+                          });
+                          d3.select(".red").html(function() {
+                            if(!(isNaN(data_cotton_total()[729]))){
+                              return "produced <span>"+d3.round(data_cotton_pc()[729], 3) + " tons</span> of cotton per <span class='capitaicon'>capita</span>"+
+                                      "</br>and <span>"+siMod(data_cotton_total()[729]*1000) + " tons</span> of cotton total";
+                            }
+                          });
+                          d3.select(".blue").html(function() {
+                            if(data_water_total()[729][0] > 0.00001){
+                              return "used <span>"+d3.round(data_water_pc()[729][0], 3) + " m&sup3;</span> blue water per <span class='capitaicon'>capita</span>"+
+                                    "</br>and <span>"+ siMod(data_water_total()[729][0]*1000) + " m&sup3</span> of blue water total";
+                            }else{
+                              return "<strong style='line-height:43px'>used <span>0</span> or no data</strong>";
+                            }
+                          });
+                          d3.select(".green").html(function() {
+                            if(data_water_total()[729][1] > 0.00001){
+                              return "used <span>"+d3.round(data_water_pc()[729][1], 3) + " m&sup3;</span> green water per <span class='capitaicon'>capita</span>"+
+                                    "</br>and <span>"+siMod(data_water_total()[729][1]*1000) + " m&sup3</span> of green water total";
+                            }
+                          });
+                          d3.select(".resources").html(function() {
+                            if(data_water_resource_pc()[729]){
+                              return "These are <span>"+d3.round(((data_water_pc()[729][1]+data_water_pc()[729][0])*100)/data_water_resource_pc()[729], 3) + "</span> % of total renewable water resources of one <span class='capitaicon'></span>";
+                            }else{
+                              return "<strong style='line-height:40px'>no data</strong>";
+                            }
+                          });
+                }
+            })
+
+            .on("mouseout",  function(d,i) {
+                countrySudan.style("cursor", "default")
+                hover.classed("hover", false);
+                hover = d3.select(null);
+                tooltip.classed("hidden", true)
+             });
+
+            countrySomalia
+            .on("mousemove", function(d,i) {
+                if(!(isNaN(d3.round(data_cotton_pc()[706], 1)))){
+                    countrySomalia
+                      hover.classed("hover", false)
+                      hover = d3.select(this).classed("hover", true)
+                      .style("cursor", "pointer")
+                      tooltip
+                        .classed("hidden", false)
+                        d3.select("h2.country").html(function() {
+                            return nameById[706];
+                          });
+                          d3.select(".red").html(function() {
+                            if(!(isNaN(data_cotton_total()[706]))){
+                              return "produced <span>"+d3.round(data_cotton_pc()[706], 3) + " tons</span> of cotton per <span class='capitaicon'>capita</span>"+
+                                      "</br>and <span>"+siMod(data_cotton_total()[706]*1000) + " tons</span> of cotton total";
+                            }
+                          });
+                          d3.select(".blue").html(function() {
+                            if(data_water_total()[706][0] > 0.00001){
+                              return "used <span>"+d3.round(data_water_pc()[706][0], 3) + " m&sup3;</span> blue water per <span class='capitaicon'>capita</span>"+
+                                    "</br>and <span>"+ siMod(data_water_total()[706][0]*1000) + " m&sup3</span> of blue water total";
+                            }else{
+                              return "<strong style='line-height:43px'>used <span>0</span> or no data</strong>";
+                            }
+                          });
+                          d3.select(".green").html(function() {
+                            if(data_water_total()[706][1] > 0.00001){
+                              return "used <span>"+d3.round(data_water_pc()[706][1], 3) + " m&sup3;</span> green water per <span class='capitaicon'>capita</span>"+
+                                    "</br>and <span>"+siMod(data_water_total()[706][1]*1000) + " m&sup3</span> of green water total";
+                            }
+                          });
+                          d3.select(".resources").html(function() {
+                            if(data_water_resource_pc()[706]){
+                              return "These are <span>"+d3.round(((data_water_pc()[706][1]+data_water_pc()[706][0])*100)/data_water_resource_pc()[706], 3) + "</span> % of total renewable water resources of one <span class='capitaicon'></span>";
+                            }else{
+                              return "<strong style='line-height:40px'>no data</strong>";
+                            }
+                          });
+                }
+            })
+
+            .on("mouseout",  function(d,i) {
+                countrySomalia.style("cursor", "default")
+                hover.classed("hover", false);
+                hover = d3.select(null);
+                tooltip.classed("hidden", true)
+             });
+
         return svg;
       }
 
@@ -684,6 +816,14 @@ function ready(error, world, all,totalByYear) {
           countryEth
             .transition().delay(350).duration(500)
             .style("fill",  function(d) { return data_cotton_total()[230] ? outColor(data_cotton_total()[230]) : null; });
+
+          countrySudan
+            .transition().delay(350).duration(500)
+            .style("fill",  function(d) { return data_cotton_total()[729] ? outColor(data_cotton_total()[729]) : null; });
+
+          countrySomalia
+            .transition().delay(350).duration(500)
+            .style("fill",  function(d) { return data_cotton_total()[706] ? outColor(data_cotton_total()[706]) : null; });
 
           //Update pies
           arcs
@@ -735,6 +875,14 @@ function ready(error, world, all,totalByYear) {
           countryEth
             .transition().delay(350).duration(500)
             .style("fill",  function(d) { return data_cotton_pc()[230] ? outColor_pc(data_cotton_pc()[230]) : null; });
+
+          countrySudan
+            .transition().delay(350).duration(500)
+            .style("fill",  function(d) { return data_cotton_pc()[729] ? outColor(data_cotton_pc()[729]) : null; });
+
+          countrySomalia
+            .transition().delay(350).duration(500)
+            .style("fill",  function(d) { return data_cotton_pc()[706] ? outColor(data_cotton_pc()[706]) : null; });
 
           //Update pies
           arcs
